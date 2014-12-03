@@ -46,10 +46,21 @@
           var modal = new Morph('Modal', elements, settings);
           
           // attach event listeners
-          element.bind('click', function () {
-            settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-            isMorphed = modal.toggle(isMorphed);
-          });
+          if(!settings.modal.enterActive){
+            element.bind('click', function () {
+              settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+              isMorphed = modal.toggle(isMorphed);
+            });
+          } else {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                  settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+                  isMorphed = modal.toggle(isMorphed);
+                }
+            });
+          }
+
+
 
           if (closeEl) {
             closeEl.bind('click', function (event) {
